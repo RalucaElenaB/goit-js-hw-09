@@ -1,10 +1,6 @@
-//-------------imports--------------------------------------
-
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-
-//-------------object of html elements--------------------
 
 const refs = {
   timePicker: document.querySelector('input#datetime-picker'),
@@ -14,8 +10,6 @@ const refs = {
   minutes: document.querySelector('span[data-minutes]'),
   seconds: document.querySelector('span[data-seconds]'),
 };
-
-//-----------adding options to the calendar-------------------
 
 const options = {
   enableTime: true,
@@ -40,7 +34,6 @@ const options = {
 
     refs.startBtn.addEventListener('click', startCountdown);
 
-    //logic for timer and conversion from ms
     function startCountdown() {
       refs.startBtn.disabled = true;
       refs.timePicker.disabled = true;
@@ -66,9 +59,6 @@ const options = {
   },
 };
 
-//----------------helper functions-------------------------
-
-//in case of one digit number
 function addLeadingZero(num) {
   return num.toString().padStart(2, '0');
 }
@@ -92,5 +82,4 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-//----------------initialize library------------------
 flatpickr(refs.timePicker, options);
