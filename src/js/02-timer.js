@@ -2,7 +2,7 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-const refs = {
+const uiInput = {
   timePicker: document.querySelector('input#datetime-picker'),
   startBtn: document.querySelector('button[data-start]'),
   days: document.querySelector('span[data-days]'),
@@ -24,36 +24,34 @@ const options = {
     // logic for past date notification from notiflix
     if (selectedTime < startTime) {
       Notify.failure('Please choose a date in the future.');
-      refs.startBtn.disabled = true;
-      return;
+      uiInput.startBtn.disabled = true;
     }
 
-    refs.startBtn.disabled = false;
+    uiInput.startBtn.disabled = false;
 
     let intervalId = null;
 
-    refs.startBtn.addEventListener('click', startCountdown);
+    uiInput.startBtn.addEventListener('click', startCountdown);
 
     function startCountdown() {
-      refs.startBtn.disabled = true;
-      refs.timePicker.disabled = true;
+      uiInput.startBtn.disabled = true;
+      uiInput.timePicker.disabled = true;
 
       intervalId = setInterval(() => {
         const currentTime = Date.now();
 
         if (selectedTime < currentTime) {
           clearInterval(intervalId);
-          refs.timePicker.disabled = false;
-          return;
+          uiInput.timePicker.disabled = false;
         }
 
         const timeDifference = selectedTime - currentTime;
         const { days, hours, minutes, seconds } = convertMs(timeDifference);
 
-        refs.days.textContent = addLeadingZero(days);
-        refs.hours.textContent = addLeadingZero(hours);
-        refs.minutes.textContent = addLeadingZero(minutes);
-        refs.seconds.textContent = addLeadingZero(seconds);
+        uiInput.days.textContent = addLeadingZero(days);
+        uiInput.hours.textContent = addLeadingZero(hours);
+        uiInput.minutes.textContent = addLeadingZero(minutes);
+        uiInput.seconds.textContent = addLeadingZero(seconds);
       }, 1000);
     }
   },
@@ -82,4 +80,4 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-flatpickr(refs.timePicker, options);
+flatpickr(uiInput.timePicker, options);
